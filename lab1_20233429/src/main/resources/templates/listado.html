@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Equipos</title>
+</head>
+<body>
+    <h1> Listado de Equipos Registrados</h1>
+    <div class="actions">
+        <a th:href="@{/equipos/nuevo}">+ Registrar Nuevo Equipo</a>
+        <br><br>
+        <form onsubmit="event.preventDefault(); location.href='/equipos/buscar/' + document.getElementById('searchCode').value;">
+            <label for="searchCode">Buscar por Código:</label>
+            <input type="text" id="searchCode" placeholder="Ej: ACT-001" required>
+            <button type="submit">Buscar</button>
+            <a th:href="@{/equipos/listar}">Restablecer filtro</a>
+        </form>
+    </div>
+    <p th:if="${codigoBuscado != null}">
+        Filtrado por código: <b th:text="${codigoBuscado}"></b>
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>Código de Activo</th>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Fecha de Adquisición</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="equipo : ${listaEquipos}">
+            <td th:text="${equipo.codigoActivo}"></td>
+            <td th:text="${equipo.nombre}"></td>
+            <td th:text="${equipo.tipo}"></td>
+            <td th:text="${equipo.fechaAdquisicion}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(listaEquipos)}">
+            <td colspan="4" style="text-align: center;">No se encontraron equipos registrados.</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</body>
+</html>
